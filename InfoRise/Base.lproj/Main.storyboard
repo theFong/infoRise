@@ -484,6 +484,9 @@
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="dX5-Pk-hzB">
                                         <rect key="frame" x="64" y="0.0" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="metricSwitchChanged:" destination="IIE-U4-Iyj" eventType="valueChanged" id="G5d-wW-yHF"/>
+                                        </connections>
                                     </switch>
                                 </subviews>
                                 <constraints>
@@ -523,6 +526,7 @@
                     <tabBarItem key="tabBarItem" title="Profile" image="user" id="e17-gl-2Ih" userLabel="Profile"/>
                     <connections>
                         <outlet property="emailLabel" destination="hRP-2d-1sM" id="nzk-4v-YOI"/>
+                        <outlet property="metricSwitch" destination="dX5-Pk-hzB" id="p09-t5-hYz"/>
                         <outlet property="nameLabel" destination="QEJ-fA-EmJ" id="fww-iW-Udr"/>
                         <outlet property="notifyTimeButton" destination="oYd-Th-cWs" id="bFK-A5-8bZ"/>
                         <outlet property="notifyTimePicker" destination="Fdq-7s-0ja" id="bn5-vG-MLn"/>

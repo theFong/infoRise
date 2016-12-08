@@ -19,6 +19,8 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var notifyTimePicker: UIDatePicker!
     @IBOutlet weak var notifyTimeButton: UIButton!
     
+    @IBOutlet weak var metricSwitch: UISwitch!
+    
     var fireBaseRef: FIRDatabaseReference!
     
     override func viewDidLoad() {
@@ -58,6 +60,14 @@ class ProfileViewController: UIViewController {
             
             self.notifyTimePicker.setDate(localTime!, animated: false)
         })
+    }
+    
+    @IBAction func metricSwitchChanged(sender: AnyObject) {
+        if metricSwitch.on {
+            RiseModel.sharedInstance.measurementType = "metric"
+        } else {
+            RiseModel.sharedInstance.measurementType = "english"
+        }
     }
     
     @IBAction func logoutButtonPressed(sender: AnyObject) {

@@ -16,15 +16,15 @@ typealias ServiceResponse = (JSON, NSError?) -> Void
 class WeatherApiManager: NSObject, CLLocationManagerDelegate {
     static let sharedInstance = WeatherApiManager()
     
-    let baseUrl = "http://api.wunderground.com/api/"
+    private let baseUrl = "http://api.wunderground.com/api/"
     
-    var ref: FIRDatabaseReference!
+    private var ref: FIRDatabaseReference!
     
-    let locationManager = CLLocationManager()
+    private let locationManager = CLLocationManager()
     
-    var cityName: NSString! = nil
-    var stateName: NSString! = nil
-    var apiKey: NSString!
+    private var cityName: NSString! = nil
+    private var stateName: NSString! = nil
+    private var apiKey: NSString!
     
     override private init() {
         super.init()
@@ -75,8 +75,9 @@ class WeatherApiManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    func getForcast(onCompletion: (JSON) -> Void) {
+    func getForcast(onCompletion: (JSON) -> Void, onError: () -> Void) {
         if !CLLocationManager.locationServicesEnabled() || !didLocationInit() {
+            onError()
             return
         }
         updateApiKey()

@@ -14,17 +14,17 @@ class RiseModel: NSObject {
     
     static let sharedInstance = RiseModel()
     
-    let weatherApiManager = WeatherApiManager.sharedInstance
+    private let weatherApiManager = WeatherApiManager.sharedInstance
     
-    var currentHourlyWeather = [JSON]()
+    private var currentHourlyWeather = [JSON]()
     
     var weatherModules = [WeatherModule]()
     
     var currentTemperature: NSString!
     
-    var conditionsConstants = ["qpf","snow","uvi","wspd"]
+    private var conditionsConstants = ["qpf","snow","uvi","wspd"]
     
-    var firebaseRef: FIRDatabaseReference!
+    private var firebaseRef: FIRDatabaseReference!
     
     var measurementType = "english"
     
@@ -177,18 +177,20 @@ class RiseModel: NSObject {
     }
     
     private func updateWeatherJson(onCompletion: () -> Void) {
-        weatherApiManager.getForcast { json in
+        weatherApiManager.getForcast ({ json in
             if json["error"].string != nil{
                 print(json["error"].string)
+                onCompletion()
                 return
             }
             if (json["hourly_forecast"] == "null"){
                 print(json)
+                onCompletion()
                 return
             }
             self.currentHourlyWeather = json["hourly_forecast"].array!
             self.updateCurrent(onCompletion)
-        }
+        }, onError: onCompletion)
     }
     
 }
