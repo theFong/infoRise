@@ -11,14 +11,38 @@ import Foundation
 class FeedModel: NSObject {
     
     static let sharedInstance = FeedModel()
+    private let newsApiManager = NewsApimanager.sharedInstance
+    private var articlesJson = [JSON]()
+    var feedObjects = [FeedObject]()
     
-    let newsApiManager = NewsApimanager.sharedInstance
+    struct FeedObject {
+        var headLine = ""
+        var link = ""
+        var description = ""
+        var iconLink = ""
+    }
     
     private override init() {
         super.init()
-        
     }
     
+    func updateModel(onCompletion: () -> Void){
+        updateNews(onCompletion)
+    }
     
+    private func updateNews(onCompletion: () -> Void){
+        newsApiManager.getNews { json in
+            self.articlesJson = (json as JSON)["articles"].array!
+            self.setFeed()
+            onCompletion()
+        }
+    }
+    
+    private func setFeed() {
+        for a in articlesJson {
+            let fo = FeedObject(headLine: a["title"].string!, link: a["url"].string!, description: a["description"].string!, iconLink: a["urlToImage"].string!)
+            feedObjects.append(fo)
+        }
+    }
     
 }

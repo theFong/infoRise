@@ -15,11 +15,11 @@ class RiseTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         self.riseModel.updateModel({
             self.tableView.reloadData()
             self.refreshControl!.endRefreshing()
         })
-        self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
     }
     
     override func didReceiveMemoryWarning() {
@@ -58,7 +58,7 @@ class RiseTableViewController: UITableViewController {
         case 0:
             return "Current Weather Conditions"
         default:
-            return "Between \(riseModel.weatherModules[section-1].startTime) - \(riseModel.weatherModules[section-1].endTime), wear"
+            return "\(riseModel.weatherModules[section-1].startDay) \(riseModel.weatherModules[section-1].startTime) - \(riseModel.weatherModules[section-1].endDay) \(riseModel.weatherModules[section-1].endTime), wear"
         }
     }
     

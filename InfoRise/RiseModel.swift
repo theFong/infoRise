@@ -33,13 +33,14 @@ class RiseModel: NSObject {
     var currentConditionString = ""
     
     class WeatherModule {
-        init(startTime: NSString,endTime: NSString, weather: NSString, conditions: [NSString]) {
+        init(startDay: NSString, startTime: NSString, weather: NSString, conditions: [NSString]) {
             self.startTime = startTime
-            self.endTime = endTime
             self.weather = weather
             self.conditions = conditions
         }
+        var startDay: NSString = ""
         var startTime: NSString = ""
+        var endDay = ""
         var endTime: NSString = ""
         var weather: NSString = ""
         var conditions = [NSString]()
@@ -96,7 +97,7 @@ class RiseModel: NSObject {
                         weather = rest.key as NSString
                     }
                 }
-                let wh = WeatherModule(startTime: hour["FCTTIME"]["civil"].string!, endTime: "", weather: weather, conditions: conditionModules)
+                var wh = WeatherModule(startDay: hour["FCTTIME"]["weekday_name_abbrev"].string!,startTime: hour["FCTTIME"]["civil"].string!, weather: weather, conditions: conditionModules)
                 weatherandConditionsArr.append(wh)
             }
             self.setModules(weatherandConditionsArr, onCompletion: onCompletion)
@@ -132,7 +133,7 @@ class RiseModel: NSObject {
                 } else {
                     endTimeStr = "\(nextHour):00 \(meridian)"
                 }
-                
+                prevMod.endDay = hourMod.startDay as String
                 prevMod.endTime = endTimeStr
             } else {
                 prevMod = hourMod
