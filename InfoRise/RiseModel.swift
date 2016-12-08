@@ -18,7 +18,7 @@ class RiseModel: NSObject {
     
     var currentHourlyWeather = [JSON]()
     
-    var weatherModules = [[NSString]]()
+    var weatherModules = [WeatherModule]()
     
     var currentTemperature: NSString!
     
@@ -26,27 +26,36 @@ class RiseModel: NSObject {
     
     var firebaseRef: FIRDatabaseReference!
     
+    var measurementType = "english"
+    
+    
+    class WeatherModule {
+        init(startTime: NSString,endTime: NSString, weather: NSString, conditions: [NSString]) {
+            self.startTime = startTime
+            self.endTime = endTime
+            self.weather = weather
+            self.conditions = conditions
+        }
+        var startTime: NSString = ""
+        var endTime: NSString = ""
+        var weather: NSString = ""
+        var conditions = [NSString]()
+        var outfits = [NSString]()
+    }
+    
     override private init() {
         super.init()
         
         firebaseRef = FIRDatabase.database().reference()
         
+    }
+    
+    func updateModel() {
+        // waterfalls
         updateWeatherJson()
     }
     
-    struct WeatherModule {
-        var startTime: NSString
-        var endTime: NSString
-        var weather: NSString
-        var conditions = [NSString]()
-    }
-    
-    func update() {
-        updateWeatherJson()
-        updateCurrentTemp()
-        updateModules()
-    }
-    
+    // converts data into categories like rain, wind, snow, hot, cold etc..
     private func updateModules() {
         var weatherandConditionsArr = [WeatherModule]()
         firebaseRef.child("rise_data").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
@@ -57,9 +66,16 @@ class RiseModel: NSObject {
                 var conditionModules = [NSString]()
                 var count = 0
                 while let rest = enumerator.nextObject() as? FIRDataSnapshot {
-                    let cond = rest.children.allObjects[0]
-                    let condThreshold = cond.value[cond.key]
-                    if hour[self.conditionsConstants[count]].int > Int(condThreshold as! NSNumber) {
+                    
+                    let cond = rest.children.allObjects[0] as? FIRDataSnapshot
+                    let condThreshold = (cond?.value)! as! String
+                    
+                    if self.conditionsConstants[count] == "uvi" {
+                        if Float(hour[self.conditionsConstants[count]].string!) > Float(condThreshold) {
+                            conditionModules.append(rest.key as NSString)
+                        }
+                    }
+                    else if Float(hour[self.conditionsConstants[count]]["english"].string!) > Float(condThreshold) {
                         conditionModules.append(rest.key as NSString)
                     }
                     count += 1
@@ -67,11 +83,15 @@ class RiseModel: NSObject {
                 
                 // weather
                 var weather: NSString = ""
+
                 enumerator = snapshot.childSnapshotForPath("weather_module").children
+                
                 while let rest = enumerator.nextObject() as? FIRDataSnapshot {
                     let high = rest.value!["high_temp"]
                     let low = rest.value!["low_temp"]
-                    if hour["feelslike"].int > Int(low as! NSNumber) && hour["feelslike"].int < Int(high as! NSNumber) {
+                    
+                    // range checking
+                    if Int(hour["feelslike"]["english"].string!) >= Int(low as! String) && Int(hour["feelslike"]["english"].string!) < Int(high as! String) {
                         weather = rest.key as NSString
                     }
                 }
@@ -84,26 +104,71 @@ class RiseModel: NSObject {
 
     }
     
+    // merging similar modules
     private func setModules(w: [WeatherModule]) {
+        var prevMod =  w[0]
+        weatherModules.append(prevMod)
+        for hourMod in w {
+            // adding missed conditions
+            if prevMod.weather == hourMod.weather {
+                var currentConds = [NSString:NSString]()
+                for prevModCond in prevMod.conditions {
+                    currentConds[prevModCond] = ""
+                }
+                for hourModCond in hourMod.conditions {
+                    if currentConds[hourModCond] == nil {
+                        prevMod.conditions.append(hourModCond)
+                    }
+                }
+                prevMod.endTime = hourMod.startTime
+                
+            } else {
+                prevMod = hourMod
+                weatherModules.append(prevMod)
+            }
+            
+        }
+        addOutfits()
+    }
+    
+    private func addOutfits(){
         
-        var prevWeather: NSString =  w[0].weather
-        for hourWeather in w {
-            if prevWeather == hourWeather.weather {
-                for cond in hourWeather.conditions {
-                    
+        firebaseRef.child("rise_data").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            for mod in self.weatherModules {
+                // look up condition
+                for cond in mod.conditions {
+                   let outfits = snapshot.childSnapshotForPath("condition_module").childSnapshotForPath(cond as String).childSnapshotForPath("outfits").children
+                    for o in outfits {
+                        for article in o.children {
+                            mod.outfits.append(article.value as NSString)
+                        }
+                    }
+                }
+                // look up weather
+                let outfitSnap = snapshot.childSnapshotForPath("weather_module").childSnapshotForPath(mod.weather as String).childSnapshotForPath("outfits")
+                for o in outfitSnap.children {
+                    for article in o.children{
+                        mod.outfits.append(article.value as NSString)
+                    }
                 }
             }
-//            weatherModules.append()
-        }
+        })
+        
     }
     
     private func updateCurrentTemp() {
-        currentTemperature = currentHourlyWeather[0]["temp"].string
+        currentTemperature = currentHourlyWeather[0]["temp"][measurementType].string
+        updateModules()
     }
     
     private func updateWeatherJson() {
         weatherApiManager.getForcast { json in
+            if json["error"].exists(){
+                print(json["error"]["description"].string)
+                return
+            }
             self.currentHourlyWeather = json["hourly_forecast"].array!
+            self.updateCurrentTemp()
         }
     }
     

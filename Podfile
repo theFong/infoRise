@@ -9,6 +9,7 @@ target 'InfoRise' do
 
   pod 'GoogleSignIn'
   
+  
   pod 'Firebase/Auth'
   
   pod 'Firebase/Database'

@@ -10,12 +10,12 @@ import UIKit
 import CoreLocation
 
 class RiseViewController: UIViewController {
-
-    let weatherApiManager = WeatherApiManager.sharedInstance
+    
+    let riseModel = RiseModel.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        riseModel.updateModel()
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,10 +24,7 @@ class RiseViewController: UIViewController {
     }
     
     @IBAction func testButtonPressed(sender: AnyObject) {
-        weatherApiManager.getForcast { json in
-            print(json)
-        }
-        
+        riseModel.updateModel()
     }
    
 
