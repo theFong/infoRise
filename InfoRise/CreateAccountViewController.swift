@@ -65,7 +65,13 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate {
         return false
     }
     
-    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        FirstNameTextField.resignFirstResponder()
+        LastNameTextField.resignFirstResponder()
+        EmailTextField.resignFirstResponder()
+        PasswordTextField.resignFirstResponder()
+        ConfirmPassTextField.resignFirstResponder()
+    }
     
     @IBAction func CreateAndLoginButtonPressed(sender: AnyObject) {
         startLoadingAnimation()

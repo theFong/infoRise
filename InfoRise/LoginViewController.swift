@@ -60,6 +60,11 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
         return false
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        EmailTextField.resignFirstResponder()
+        PasswordTextField.resignFirstResponder()
+    }
+    
     //google sign in
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!) {
         startLoadingAnimation()

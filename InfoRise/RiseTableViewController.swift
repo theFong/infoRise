@@ -46,6 +46,23 @@ class RiseTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             cell.textLabel?.text = "\(riseModel.currentConditionString), \(riseModel.currentTemperature)°\(riseModel.measurementType == "english" ? "F" : "C")"
+            
+            let url = NSURL(string: riseModel.currentImageURL)!
+            // Download task:
+            // - sharedSession = global NSURLCache, NSHTTPCookieStorage and NSURLCredentialStorage objects.
+            let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (responseData, responseUrl, error) -> Void in
+                // if responseData is not null...
+                if let data = responseData{
+                    
+                    // execute in UI thread
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        cell.imageView!.image = UIImage(data: data)
+                    })
+                }
+            }
+            // Run task
+            task.resume()
+            
             return cell
         default:
             cell.textLabel?.text = riseModel.weatherModules[indexPath.section-1].outfits[indexPath.row] as String

@@ -38,11 +38,33 @@ class FeedTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("feedCell", forIndexPath: indexPath) as UITableViewCell
         cell.textLabel?.text = feedModel.feedObjects[indexPath.row].headLine
+        
+        let url = NSURL(string: feedModel.feedObjects[indexPath.row].iconLink)!
+        // Download task:
+        // - sharedSession = global NSURLCache, NSHTTPCookieStorage and NSURLCredentialStorage objects.
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (responseData, responseUrl, error) -> Void in
+            // if responseData is not null...
+            if let data = responseData{
+                
+                // execute in UI thread
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    cell.imageView!.image = UIImage(data: data)
+                })
+            }
+        }
+        // Run task
+        task.resume()
+        
         return cell
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        UIApplication.sharedApplication().openURL(NSURL(string: feedModel.feedObjects[indexPath.row].link)!)
+    }
+    
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 100.0;//Choose your custom row height
+        return 100.0;//custom row height
     }
     
     func handleRefresh(refreshControl: UIRefreshControl) {
