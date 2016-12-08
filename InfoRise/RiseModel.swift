@@ -28,6 +28,9 @@ class RiseModel: NSObject {
     
     var measurementType = "english"
     
+    var currentImageURL = ""
+    
+    var currentConditionString = ""
     
     class WeatherModule {
         init(startTime: NSString,endTime: NSString, weather: NSString, conditions: [NSString]) {
@@ -45,13 +48,12 @@ class RiseModel: NSObject {
     
     override private init() {
         super.init()
-        
         firebaseRef = FIRDatabase.database().reference()
-        
     }
     
     func updateModel() {
         // waterfalls
+        print("starting update")
         updateWeatherJson()
     }
     
@@ -107,6 +109,7 @@ class RiseModel: NSObject {
     // merging similar modules
     private func setModules(w: [WeatherModule]) {
         var prevMod =  w[0]
+        weatherModules = [WeatherModule]()
         weatherModules.append(prevMod)
         for hourMod in w {
             // adding missed conditions
@@ -120,8 +123,18 @@ class RiseModel: NSObject {
                         prevMod.conditions.append(hourModCond)
                     }
                 }
-                prevMod.endTime = hourMod.startTime
+
+                let meridian = (hourMod.startTime as String).characters.split{$0 == " "}.map(String.init)[1]
+                let hourVal = (hourMod.startTime as String).characters.split{$0 == ":"}.map(String.init)[0]
+                let nextHour = Int(hourVal) == 12 ? 1 : Int(hourVal)!+1
+                var endTimeStr = ""
+                if nextHour == 1 {
+                    endTimeStr = "\(nextHour):00 \(meridian == "AM" ? "PM" : "AM")"
+                } else {
+                    endTimeStr = "\(nextHour):00 \(meridian)"
+                }
                 
+                prevMod.endTime = endTimeStr
             } else {
                 prevMod = hourMod
                 weatherModules.append(prevMod)
@@ -151,24 +164,31 @@ class RiseModel: NSObject {
                         mod.outfits.append(article.value as NSString)
                     }
                 }
+                print(mod.outfits)
             }
+
         })
         
     }
+
     
-    private func updateCurrentTemp() {
+    private func updateCurrent() {
         currentTemperature = currentHourlyWeather[0]["temp"][measurementType].string
+        currentImageURL = currentHourlyWeather[0]["icon_url"].string!
+        currentConditionString = currentHourlyWeather[0]["condition"].string!
         updateModules()
     }
     
     private func updateWeatherJson() {
         weatherApiManager.getForcast { json in
-            if json["error"].exists(){
-                print(json["error"]["description"].string)
+            print(json["error"].string)
+            if json["error"].string != nil{
+                print(json)
                 return
             }
+            print(json["hourly_forecast"])
             self.currentHourlyWeather = json["hourly_forecast"].array!
-            self.updateCurrentTemp()
+            self.updateCurrent()
         }
     }
     

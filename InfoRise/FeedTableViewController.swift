@@ -1,5 +1,5 @@
 //
-//  FirstViewController.swift
+//  SecondViewController.swift
 //  InfoRise
 //
 //  Created by Alec Fong on 12/1/16.
@@ -7,26 +7,26 @@
 //
 
 import UIKit
-import CoreLocation
 
-class RiseViewController: UIViewController {
+class FeedTableViewController: UITableViewController {
     
-    let riseModel = RiseModel.sharedInstance
-    
+    let newsApiManager = NewsApimanager.sharedInstance
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        riseModel.updateModel()
+        // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    @IBAction func testButtonPressed(sender: AnyObject) {
-        riseModel.updateModel()
+    @IBAction func newsButtonPressed(sender: AnyObject) {
+        newsApiManager.getNews { json in
+            print(json)
+        }
     }
-   
 
 
 }

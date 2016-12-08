@@ -91,7 +91,6 @@ class WeatherApiManager: NSObject, CLLocationManagerDelegate {
     
     
     func makeHTTPGetRequest(path: String, onCompletion: ServiceResponse) {
-        print(path)
         let request = NSMutableURLRequest(URL: NSURL(string: path)!)
         
         let session = NSURLSession.sharedSession()

@@ -20,8 +20,8 @@
 		4FEF603F1DF5262C00E279D5 /* WeatherApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEF603E1DF5262C00E279D5 /* WeatherApiManager.swift */; };
 		4FEF60471DF5629600E279D5 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FEF60461DF5629600E279D5 /* SwiftyJSON.framework */; };
 		4FF377141DF119FE00F9B801 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF377131DF119FE00F9B801 /* AppDelegate.swift */; };
-		4FF377161DF119FE00F9B801 /* RiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF377151DF119FE00F9B801 /* RiseViewController.swift */; };
-		4FF377181DF119FE00F9B801 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF377171DF119FE00F9B801 /* FeedViewController.swift */; };
+		4FF377161DF119FE00F9B801 /* RiseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF377151DF119FE00F9B801 /* RiseTableViewController.swift */; };
+		4FF377181DF119FE00F9B801 /* FeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF377171DF119FE00F9B801 /* FeedTableViewController.swift */; };
 		4FF3771B1DF119FE00F9B801 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FF377191DF119FE00F9B801 /* Main.storyboard */; };
 		4FF3771D1DF119FE00F9B801 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF3771C1DF119FE00F9B801 /* Assets.xcassets */; };
 		4FF377201DF119FE00F9B801 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FF3771E1DF119FE00F9B801 /* LaunchScreen.storyboard */; };
@@ -68,8 +68,8 @@
 		4FEF60461DF5629600E279D5 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../../../Library/Developer/Xcode/DerivedData/InfoRise-cdddcmqiylgzykckhupxybjqznuk/Build/Products/Debug-iphonesimulator/SwiftyJSON/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		4FF377101DF119FE00F9B801 /* InfoRise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfoRise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF377131DF119FE00F9B801 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4FF377151DF119FE00F9B801 /* RiseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiseViewController.swift; sourceTree = "<group>"; };
-		4FF377171DF119FE00F9B801 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		4FF377151DF119FE00F9B801 /* RiseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiseTableViewController.swift; sourceTree = "<group>"; };
+		4FF377171DF119FE00F9B801 /* FeedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewController.swift; sourceTree = "<group>"; };
 		4FF3771A1DF119FE00F9B801 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4FF3771C1DF119FE00F9B801 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4FF3771F1DF119FE00F9B801 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -122,8 +122,8 @@
 		4FEBB18C1DF60CE00086E50D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				4FF377151DF119FE00F9B801 /* RiseViewController.swift */,
-				4FF377171DF119FE00F9B801 /* FeedViewController.swift */,
+				4FF377151DF119FE00F9B801 /* RiseTableViewController.swift */,
+				4FF377171DF119FE00F9B801 /* FeedTableViewController.swift */,
 				4F3084A81DF4E76D0014B8B6 /* ProfileViewController.swift */,
 				4F23AC571DF3CD7F00D74770 /* CreateAccountViewController.swift */,
 				4F171D401DF390A100C12856 /* LoginViewController.swift */,
@@ -524,11 +524,11 @@
 				4F171D411DF390A100C12856 /* LoginViewController.swift in Sources */,
 				4FE2DAE41DF5676F00909F13 /* SwiftyJSON.swift in Sources */,
 				4FEBB18B1DF6041F0086E50D /* NewsApiManager.swift in Sources */,
-				4FF377181DF119FE00F9B801 /* FeedViewController.swift in Sources */,
+				4FF377181DF119FE00F9B801 /* FeedTableViewController.swift in Sources */,
 				4FF377141DF119FE00F9B801 /* AppDelegate.swift in Sources */,
 				4FEBB1901DF681220086E50D /* FeedModel.swift in Sources */,
 				4FEF603F1DF5262C00E279D5 /* WeatherApiManager.swift in Sources */,
-				4FF377161DF119FE00F9B801 /* RiseViewController.swift in Sources */,
+				4FF377161DF119FE00F9B801 /* RiseTableViewController.swift in Sources */,
 				4FEBB1921DF6816A0086E50D /* RiseModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,10 +14,11 @@ class FeedModel: NSObject {
     
     let newsApiManager = NewsApimanager.sharedInstance
     
-    override init() {
+    private override init() {
         super.init()
         
-        
     }
+    
+    
     
 }
