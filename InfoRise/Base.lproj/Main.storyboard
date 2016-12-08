@@ -280,7 +280,7 @@
             </objects>
             <point key="canvasLocation" x="-99" y="0.0"/>
         </scene>
-        <!--Weather-->
+        <!--Rise-->
         <scene sceneID="Rnm-LM-Ba4">
             <objects>
                 <tableViewController id="Tp9-Eg-Tm4" customClass="RiseTableViewController" customModule="InfoRise" customModuleProvider="target" sceneMemberID="viewController">
@@ -303,7 +303,7 @@
                             <outlet property="delegate" destination="Tp9-Eg-Tm4" id="Jax-w0-3jI"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Weather" id="B2S-Md-dMJ"/>
+                    <navigationItem key="navigationItem" title="Rise" id="B2S-Md-dMJ"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="bIO-wj-IFi">
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>

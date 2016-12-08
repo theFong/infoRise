@@ -15,7 +15,10 @@ class RiseTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        riseModel.updateModel()
+        self.riseModel.updateModel({
+            self.tableView.reloadData()
+            self.refreshControl!.endRefreshing()
+        })
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
     }
     
@@ -55,15 +58,16 @@ class RiseTableViewController: UITableViewController {
         case 0:
             return "Current Weather Conditions"
         default:
-            return "Between \(riseModel.weatherModules[section-1].startTime)-\(riseModel.weatherModules[section-1].endTime), wear"
+            return "Between \(riseModel.weatherModules[section-1].startTime) - \(riseModel.weatherModules[section-1].endTime), wear"
         }
     }
     
     func handleRefresh(refreshControl: UIRefreshControl) {
      
-        self.riseModel.updateModel()
-        self.tableView.reloadData()
-        refreshControl.endRefreshing()
+        self.riseModel.updateModel({
+            self.tableView.reloadData()
+            self.refreshControl!.endRefreshing()
+        })
     }
 
 
