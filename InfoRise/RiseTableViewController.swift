@@ -73,7 +73,8 @@ class RiseTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return "Current Weather Conditions" //, \(riseModel.currentCityStr)
+            let cityName = riseModel.currentCityStr.stringByReplacingOccurrencesOfString("_", withString: " ")
+            return "Current Conditions, \(cityName)"
         default:
             return "\(riseModel.weatherModules[section-1].startDay) \(riseModel.weatherModules[section-1].startTime) - \(riseModel.weatherModules[section-1].endDay) \(riseModel.weatherModules[section-1].endTime), wear"
         }

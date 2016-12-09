@@ -312,6 +312,7 @@
 				TargetAttributes = {
 					4FF3770F1DF119FD00F9B801 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = REPQWK3473;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -674,6 +675,7 @@
 			baseConfigurationReference = F45A374ABA8469BB39F8DC82 /* Pods-InfoRise.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/GoogleSignIn/Frameworks",
@@ -691,6 +693,7 @@
 			baseConfigurationReference = 40509C08D9F3E57E8FAC7563 /* Pods-InfoRise.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/GoogleSignIn/Frameworks",
