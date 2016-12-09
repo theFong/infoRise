@@ -101,7 +101,7 @@ class RiseModel: NSObject {
                         weather = rest.key as NSString
                     }
                 }
-                var wh = WeatherModule(startDay: hour["FCTTIME"]["weekday_name_abbrev"].string!,startTime: hour["FCTTIME"]["civil"].string!, weather: weather, conditions: conditionModules)
+                let wh = WeatherModule(startDay: hour["FCTTIME"]["weekday_name_abbrev"].string!,startTime: hour["FCTTIME"]["civil"].string!, weather: weather, conditions: conditionModules)
                 weatherandConditionsArr.append(wh)
             }
             self.setModules(weatherandConditionsArr, onCompletion: onCompletion)
