@@ -46,8 +46,8 @@ class RiseTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             cell.textLabel?.text = "\(riseModel.currentConditionString), \(riseModel.currentTemperature)°\(riseModel.measurementType == "english" ? "F" : "C")"
-            
             let url = NSURL(string: riseModel.currentImageURL)!
+            cell.textLabel?.textColor = hexStringToUIColor("FAAF09")
             // Download task:
             // - sharedSession = global NSURLCache, NSHTTPCookieStorage and NSURLCredentialStorage objects.
             let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (responseData, responseUrl, error) -> Void in
@@ -73,7 +73,7 @@ class RiseTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return "Current Weather Conditions"
+            return "Current Weather Conditions" //, \(riseModel.currentCityStr)
         default:
             return "\(riseModel.weatherModules[section-1].startDay) \(riseModel.weatherModules[section-1].startTime) - \(riseModel.weatherModules[section-1].endDay) \(riseModel.weatherModules[section-1].endTime), wear"
         }
@@ -85,6 +85,29 @@ class RiseTableViewController: UITableViewController {
             self.tableView.reloadData()
             self.refreshControl!.endRefreshing()
         })
+    }
+    
+    //stackoverflow
+    func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet() as NSCharacterSet).uppercaseString
+        
+        if (cString.hasPrefix("#")) {
+            cString = cString.substringFromIndex(cString.startIndex.advancedBy(1))
+        }
+        
+        if ((cString.characters.count) != 6) {
+            return UIColor.grayColor()
+        }
+        
+        var rgbValue:UInt32 = 0
+        NSScanner(string: cString).scanHexInt(&rgbValue)
+        
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
     }
 
 

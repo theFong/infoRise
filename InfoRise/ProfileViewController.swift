@@ -29,10 +29,10 @@ class ProfileViewController: UIViewController {
         fireBaseRef = FIRDatabase.database().reference()
         
         initPicker()
-        
-        nameLabel.text = FIRAuth.auth()?.currentUser?.displayName
+        self.fireBaseRef.child("users").child((FIRAuth.auth()?.currentUser?.uid)!).child("name").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                self.nameLabel.text = snapshot.value as? String
+            })
         emailLabel.text = FIRAuth.auth()?.currentUser?.email
-        
     }
     
     override func didReceiveMemoryWarning() {

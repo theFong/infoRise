@@ -22,8 +22,8 @@ class WeatherApiManager: NSObject, CLLocationManagerDelegate {
     
     private let locationManager = CLLocationManager()
     
-    private var cityName: NSString! = nil
-    private var stateName: NSString! = nil
+    var cityName: NSString! = nil
+    var stateName: NSString! = nil
     private var apiKey: NSString!
     
     override private init() {

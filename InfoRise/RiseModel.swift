@@ -32,15 +32,18 @@ class RiseModel: NSObject {
     
     var currentConditionString = ""
     
+    var currentCityStr = ""
+    
     class WeatherModule {
         init(startDay: NSString, startTime: NSString, weather: NSString, conditions: [NSString]) {
+            self.startDay = startDay
             self.startTime = startTime
             self.weather = weather
             self.conditions = conditions
         }
         var startDay: NSString = ""
         var startTime: NSString = ""
-        var endDay = ""
+        var endDay: NSString = ""
         var endTime: NSString = ""
         var weather: NSString = ""
         var conditions = [NSString]()
@@ -133,7 +136,8 @@ class RiseModel: NSObject {
                 } else {
                     endTimeStr = "\(nextHour):00 \(meridian)"
                 }
-                prevMod.endDay = hourMod.startDay as String
+                prevMod.endDay = hourMod.startDay
+                
                 prevMod.endTime = endTimeStr
             } else {
                 prevMod = hourMod
@@ -174,6 +178,7 @@ class RiseModel: NSObject {
         currentTemperature = currentHourlyWeather[0]["temp"][measurementType].string
         currentImageURL = currentHourlyWeather[0]["icon_url"].string!
         currentConditionString = currentHourlyWeather[0]["condition"].string!
+        currentCityStr = weatherApiManager.cityName as String
         updateModules(onCompletion)
     }
     
@@ -184,8 +189,9 @@ class RiseModel: NSObject {
                 onCompletion()
                 return
             }
-            if (json["hourly_forecast"] == "null"){
+            if (json["hourly_forecast"].array == nil){
                 print(json)
+                print("error")
                 onCompletion()
                 return
             }
