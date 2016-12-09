@@ -67,7 +67,7 @@ class RiseTableViewController: UITableViewController {
         default:
             //hacky fix to weird bug where sometimes the outfits get cleared, appears before load often
             if riseModel.weatherModules[indexPath.section-1].outfits.count == 0 {
-//                print("fuck")
+//                print("*XDSSFSJSAJ")
                 return cell
             }
             cell.textLabel?.text = riseModel.weatherModules[indexPath.section-1].outfits[indexPath.row] as String

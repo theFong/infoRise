@@ -32,15 +32,18 @@ class FeedModel: NSObject {
     
     private func updateNews(onCompletion: () -> Void){
         newsApiManager.getNews { json in
+            
             self.articlesJson = (json as JSON)["articles"].array!
             self.setFeed()
+            
             onCompletion()
         }
     }
     
     private func setFeed() {
         for a in articlesJson {
-            let fo = FeedObject(headLine: a["title"].string!, link: a["url"].string!, description: a["description"].string!, iconLink: a["urlToImage"].string!)
+            print(a)
+            let fo = FeedObject(headLine: a["title"].string != nil ? a["title"].string! : "", link: a["url"].string!, description: a["description"].string != nil ? a["description"].string! : "", iconLink: a["urlToImage"].string != nil ? a["urlToImage"].string! : "")
             feedObjects.append(fo)
         }
     }
