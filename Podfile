@@ -15,8 +15,7 @@ target 'InfoRise' do
   pod 'Firebase/Database'
   
   pod 'SwiftyJSON', '2.4.0'
-  
-  pod 'NVActivityIndicatorView', :git => 'https://github.com/ninjaprox/NVActivityIndicatorView.git', :branch => 'swift2.3'
+
 
   # Pods for InfoRise
 

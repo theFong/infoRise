@@ -52,6 +52,7 @@ class WeatherApiManager: NSObject, CLLocationManagerDelegate {
             var placeMark: CLPlacemark!
             placeMark = placemarks?[0]
             // City
+            print(placeMark.addressDictionary)
             if let city = placeMark.addressDictionary!["City"] as? NSString {
                 self.cityName = city.stringByReplacingOccurrencesOfString(" ", withString: "_")
             }

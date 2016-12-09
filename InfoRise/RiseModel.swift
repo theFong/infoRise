@@ -62,6 +62,7 @@ class RiseModel: NSObject {
     
     // converts data into categories like rain, wind, snow, hot, cold etc..
     private func updateModules(onCompletion: () -> Void) {
+        objc_sync_enter(weatherModules)
         var weatherandConditionsArr = [WeatherModule]()
         firebaseRef.child("rise_data").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             
@@ -126,7 +127,7 @@ class RiseModel: NSObject {
                         prevMod.conditions.append(hourModCond)
                     }
                 }
-
+                // get next hour for the 
                 let meridian = (hourMod.startTime as String).characters.split{$0 == " "}.map(String.init)[1]
                 let hourVal = (hourMod.startTime as String).characters.split{$0 == ":"}.map(String.init)[0]
                 let nextHour = Int(hourVal) == 12 ? 1 : Int(hourVal)!+1
@@ -168,6 +169,7 @@ class RiseModel: NSObject {
                     }
                 }
             }
+            objc_sync_exit(self.weatherModules)
             onCompletion()
         })
         

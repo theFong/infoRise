@@ -51,6 +51,7 @@
 /* Begin PBXFileReference section */
 		1AB2E23E3B9BCCD3D850BE21 /* Pods_InfoRiseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InfoRiseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		40509C08D9F3E57E8FAC7563 /* Pods-InfoRise.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InfoRise.release.xcconfig"; path = "Pods/Target Support Files/Pods-InfoRise/Pods-InfoRise.release.xcconfig"; sourceTree = "<group>"; };
+		4F1439661DFA87A3006C8AEA /* InfoRise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InfoRise.entitlements; sourceTree = "<group>"; };
 		4F171D401DF390A100C12856 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4F23AC4F1DF3BF4C00D74770 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4F23AC571DF3CD7F00D74770 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
@@ -174,6 +175,7 @@
 		4FF377121DF119FE00F9B801 /* InfoRise */ = {
 			isa = PBXGroup;
 			children = (
+				4F1439661DFA87A3006C8AEA /* InfoRise.entitlements */,
 				4FEBB18E1DF680E10086E50D /* Models */,
 				4FEBB18D1DF60CFE0086E50D /* ApiManagers */,
 				4FEBB18C1DF60CE00086E50D /* ViewControllers */,
@@ -316,6 +318,9 @@
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
+							};
+							com.apple.Keychain = {
+								enabled = 1;
 							};
 						};
 					};
@@ -675,6 +680,7 @@
 			baseConfigurationReference = F45A374ABA8469BB39F8DC82 /* Pods-InfoRise.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = InfoRise/InfoRise.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -685,6 +691,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.alecsanf.InfoRise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -693,6 +700,7 @@
 			baseConfigurationReference = 40509C08D9F3E57E8FAC7563 /* Pods-InfoRise.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = InfoRise/InfoRise.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -703,6 +711,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.alecsanf.InfoRise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};

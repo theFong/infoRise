@@ -51,7 +51,6 @@ PODS:
   - GTMSessionFetcher/Core (1.1.7)
   - GTMSessionFetcher/Full (1.1.7):
     - GTMSessionFetcher/Core (= 1.1.7)
-  - NVActivityIndicatorView (2.12)
   - SwiftyJSON (2.4.0)
 
 DEPENDENCIES:
@@ -59,18 +58,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - GoogleSignIn
-  - NVActivityIndicatorView (from `https://github.com/ninjaprox/NVActivityIndicatorView.git`, branch `swift2.3`)
   - SwiftyJSON (= 2.4.0)
-
-EXTERNAL SOURCES:
-  NVActivityIndicatorView:
-    :branch: swift2.3
-    :git: https://github.com/ninjaprox/NVActivityIndicatorView.git
-
-CHECKOUT OPTIONS:
-  NVActivityIndicatorView:
-    :commit: ac4325492550b9ec9516e3a9b6e28b2c07faa1c6
-    :git: https://github.com/ninjaprox/NVActivityIndicatorView.git
 
 SPEC CHECKSUMS:
   Firebase: 387f37c7dca894a02708da9ff35ba147040eae9e
@@ -86,9 +74,8 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   GTMOAuth2: 7fc9c10f5c745f4d9850419ea88889fe3baa6b7d
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
-  NVActivityIndicatorView: de8be03826726ad99cdfacf7fe09e88cbfeef911
   SwiftyJSON: 96918c1bf505efa50c4f72957018dd3452090c9c
 
-PODFILE CHECKSUM: 79f1a4eceee6d52869357b460197509b5d3306e6
+PODFILE CHECKSUM: 1ade0c67ed572c39ba0b893ec629fec0b41aaf40
 
 COCOAPODS: 1.1.1

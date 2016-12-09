@@ -65,6 +65,11 @@ class RiseTableViewController: UITableViewController {
             
             return cell
         default:
+            //hacky fix to weird bug where sometimes the outfits get cleared, appears before load often
+            if riseModel.weatherModules[indexPath.section-1].outfits.count == 0 {
+//                print("fuck")
+                return cell
+            }
             cell.textLabel?.text = riseModel.weatherModules[indexPath.section-1].outfits[indexPath.row] as String
             return cell
         }
@@ -113,4 +118,19 @@ class RiseTableViewController: UITableViewController {
 
 
 }
+
+//print("--weather: \(riseModel.weatherModules[indexPath.section-1].weather)--")
+//print("outCount: \(riseModel.weatherModules[indexPath.section-1].outfits.count)")
+//print("outs: \(riseModel.weatherModules[indexPath.section-1].outfits)")
+//print("all:")
+//for i in riseModel.weatherModules {
+//    print(i.outfits)
+//}
+
+//print("section: \(indexPath.section)")
+//print("row: \(indexPath.row)")
+
+
+
+
 
