@@ -65,6 +65,8 @@ class RiseTableViewController: UITableViewController {
             
             return cell
         default:
+            cell.textLabel?.textColor = hexStringToUIColor("3D586C")
+            cell.imageView!.image = nil
             //hacky fix to weird bug where sometimes the outfits get cleared, appears before load often
             if riseModel.weatherModules[indexPath.section-1].outfits.count == 0 {
 //                print("*XDSSFSJSAJ")
