@@ -24,6 +24,8 @@ A weather and news app that predicts what you should wear given the current and 
 - [ ] Use ML to adjust thresholds based on feed back
 
 #### Profile
+- [ ] Feed back from updating location
+- [ ] Change location based on input city and state
 - [ ] Get profile icon
 - [ ] Implement push notifications
 - [ ] Allow users to update of password, email, profile pic, name etc.
@@ -38,7 +40,7 @@ A weather and news app that predicts what you should wear given the current and 
 #### Known Issues
 - [ ] Will show wrong day if end time is 1:00 AM
 - [ ] Sometimes end time is missing
-- [ ] outfits changed to null
+- [x] outfits changed to null
 - [ ] Resizing issues with icons in the feed
 
 
