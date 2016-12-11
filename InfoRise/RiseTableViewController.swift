@@ -48,12 +48,14 @@ class RiseTableViewController: UITableViewController {
             cell.textLabel?.textColor = hexStringToUIColor("FAAF09")
 
             if(riseModel.currentConditionString == nil || riseModel.currentTemperature == nil){
+                cell.textLabel?.textAlignment = .Center
                 cell.textLabel?.text = "Refresh"
                 self.riseModel.updateModel({
                     self.tableView.reloadData()
                     self.refreshControl!.endRefreshing()
                 })
             } else {
+                cell.textLabel?.textAlignment = .Left
                 cell.textLabel?.text = "\(riseModel.currentConditionString), \(riseModel.currentTemperature)°\(riseModel.measurementType == "english" ? "F" : "C")"
                 let url = NSURL(string: riseModel.currentImageURL)!
                 // Download task:
