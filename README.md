@@ -41,7 +41,7 @@ A weather and news app that predicts what you should wear given the current and 
 #### Known Issues
 - [x] Nil value on first time opening app
 - [ ] Will show wrong day if end time is 1:00 AM
-- [ ] Sometimes end time is missing
+- [x] Sometimes end time is missing
 - [x] outfits changed to null
 - [ ] Resizing issues with icons in the feed
 
