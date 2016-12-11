@@ -76,7 +76,13 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func updateLocationButtonPressed(sender: AnyObject) {
-        WeatherApiManager.sharedInstance.updateLocation()
+        WeatherApiManager.sharedInstance.updateLocation({(location) in
+            let alertController = UIAlertController(title: "Location Updated", message:
+                location, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        })
+        
     }
     
     @IBAction func notifyTimeButtonPressed(sender: AnyObject) {

@@ -132,26 +132,32 @@ class RiseModel: NSObject {
                         prevMod.conditions.append(hourModCond)
                     }
                 }
-                // get next hour for the 
-                let meridian = (hourMod.startTime as String).characters.split{$0 == " "}.map(String.init)[1]
-                let hourVal = (hourMod.startTime as String).characters.split{$0 == ":"}.map(String.init)[0]
-                let nextHour = Int(hourVal) == 12 ? 1 : Int(hourVal)!+1
-                var endTimeStr = ""
-                if nextHour == 1 {
-                    endTimeStr = "\(nextHour):00 \(meridian == "AM" ? "PM" : "AM")"
-                } else {
-                    endTimeStr = "\(nextHour):00 \(meridian)"
-                }
-                prevMod.endDay = hourMod.startDay
                 
-                prevMod.endTime = endTimeStr
+                prevMod.endDay = hourMod.startDay
+                prevMod.endTime = getNextHour(hourMod.startTime as String)
+
             } else {
                 prevMod = hourMod
+                prevMod.endDay = prevMod.startDay
+                prevMod.endTime = getNextHour(prevMod.startTime as String)
                 weatherModules.append(prevMod)
             }
             
         }
         addOutfits(onCompletion)
+    }
+    
+    private func getNextHour(hour: String) -> String {
+        let meridian = hour.characters.split{$0 == " "}.map(String.init)[1]
+        let hourVal = hour.characters.split{$0 == ":"}.map(String.init)[0]
+        let nextHour = Int(hourVal) == 12 ? 1 : Int(hourVal)!+1
+        var endTimeStr = ""
+        if nextHour == 1 {
+            endTimeStr = "\(nextHour):00 \(meridian == "AM" ? "PM" : "AM")"
+        } else {
+            endTimeStr = "\(nextHour):00 \(meridian)"
+        }
+        return endTimeStr
     }
     
     private func addOutfits(onCompletion: () -> Void){

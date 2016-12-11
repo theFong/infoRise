@@ -73,7 +73,6 @@ class RiseTableViewController: UITableViewController {
                 // Run task
                 task.resume()
             }
-            
             return cell
         default:
             cell.imageView!.image = nil
@@ -99,7 +98,7 @@ class RiseTableViewController: UITableViewController {
             let cityName = riseModel.currentCityStr.stringByReplacingOccurrencesOfString("_", withString: " ")
             return "Current Conditions, \(cityName)"
         default:
-            return "\(riseModel.weatherModules[section-1].startDay) \(riseModel.weatherModules[section-1].startTime) - \(riseModel.weatherModules[section-1].endDay) \(riseModel.weatherModules[section-1].endTime), wear"
+            return "\(riseModel.weatherModules[section-1].startDay) \(riseModel.weatherModules[section-1].startTime) - \(riseModel.weatherModules[section-1].endDay) \(riseModel.weatherModules[section-1].endTime), I suggest"
         }
     }
     

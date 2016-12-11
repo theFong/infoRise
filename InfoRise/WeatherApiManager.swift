@@ -25,6 +25,7 @@ class WeatherApiManager: NSObject, CLLocationManagerDelegate {
     var cityName: NSString! = nil
     var stateName: NSString! = nil
     private var apiKey: NSString!
+    private var locationUpdatedCompletionHandler: (String) -> Void = {(location) in }
     
     override private init() {
         super.init()
@@ -60,8 +61,11 @@ class WeatherApiManager: NSObject, CLLocationManagerDelegate {
                 self.stateName = state
             }
             self.locationManager.stopUpdatingLocation()
+            let location = "\(self.cityName), \(self.stateName)".stringByReplacingOccurrencesOfString("_", withString: " ")
+            self.locationUpdatedCompletionHandler(location)
         })
     }
+    
     
     func updateApiKey() {
         ref.child("api_keys").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
@@ -70,7 +74,8 @@ class WeatherApiManager: NSObject, CLLocationManagerDelegate {
         })
     }
     
-    func updateLocation() {
+    func updateLocation(onCompletion: (String) -> Void) {
+        locationUpdatedCompletionHandler = onCompletion
         if CLLocationManager.locationServicesEnabled() {
             locationManager.startUpdatingLocation()
         }
