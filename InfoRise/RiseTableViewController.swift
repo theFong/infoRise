@@ -45,34 +45,48 @@ class RiseTableViewController: UITableViewController {
         
         switch indexPath.section {
         case 0:
-            cell.textLabel?.text = "\(riseModel.currentConditionString), \(riseModel.currentTemperature)°\(riseModel.measurementType == "english" ? "F" : "C")"
-            let url = NSURL(string: riseModel.currentImageURL)!
             cell.textLabel?.textColor = hexStringToUIColor("FAAF09")
-            // Download task:
-            // - sharedSession = global NSURLCache, NSHTTPCookieStorage and NSURLCredentialStorage objects.
-            let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (responseData, responseUrl, error) -> Void in
-                // if responseData is not null...
-                if let data = responseData{
-                    
-                    // execute in UI thread
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        cell.imageView!.image = UIImage(data: data)
-                    })
+
+            if(riseModel.currentConditionString == nil || riseModel.currentTemperature == nil){
+                cell.textLabel?.text = "Refresh"
+                self.riseModel.updateModel({
+                    self.tableView.reloadData()
+                    self.refreshControl!.endRefreshing()
+                })
+            } else {
+                cell.textLabel?.text = "\(riseModel.currentConditionString), \(riseModel.currentTemperature)°\(riseModel.measurementType == "english" ? "F" : "C")"
+                let url = NSURL(string: riseModel.currentImageURL)!
+                // Download task:
+                // - sharedSession = global NSURLCache, NSHTTPCookieStorage and NSURLCredentialStorage objects.
+                let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (responseData, responseUrl, error) -> Void in
+                    // if responseData is not null...
+                    if let data = responseData{
+                        
+                        // execute in UI thread
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            cell.imageView!.image = UIImage(data: data)
+                        })
+                    }
                 }
+                // Run task
+                task.resume()
             }
-            // Run task
-            task.resume()
             
             return cell
         default:
-            cell.textLabel?.textColor = hexStringToUIColor("3D586C")
             cell.imageView!.image = nil
             //hacky fix to weird bug where sometimes the outfits get cleared, appears before load often
             if riseModel.weatherModules[indexPath.section-1].outfits.count == 0 {
-//                print("*XDSSFSJSAJ")
+                print("null in table caught")
                 return cell
             }
-            cell.textLabel?.text = riseModel.weatherModules[indexPath.section-1].outfits[indexPath.row] as String
+            if riseModel.weatherModules[indexPath.section-1].outfits[indexPath.row].specialCondition {
+                cell.textLabel?.textColor = hexStringToUIColor("FAAF09") //yellow
+            } else {
+                cell.textLabel?.textColor = hexStringToUIColor("3D586C") //blue
+
+            }
+            cell.textLabel?.text = riseModel.weatherModules[indexPath.section-1].outfits[indexPath.row].name
             return cell
         }
     }

@@ -20,7 +20,7 @@ class RiseModel: NSObject {
     
     var weatherModules = [WeatherModule]()
     
-    var currentTemperature: NSString!
+    var currentTemperature: String!
     
     private var conditionsConstants = ["qpf","snow","uvi","wspd"]
     
@@ -30,7 +30,7 @@ class RiseModel: NSObject {
     
     var currentImageURL = ""
     
-    var currentConditionString = ""
+    var currentConditionString: String!
     
     var currentCityStr = ""
     
@@ -47,7 +47,12 @@ class RiseModel: NSObject {
         var endTime: NSString = ""
         var weather: NSString = ""
         var conditions = [NSString]()
-        var outfits = [NSString]()
+        var outfits = [Article]()
+    }
+    
+    struct Article {
+        var name: String
+        var specialCondition: Bool
     }
     
     override private init() {
@@ -157,7 +162,8 @@ class RiseModel: NSObject {
                    let outfits = snapshot.childSnapshotForPath("condition_module").childSnapshotForPath(cond as String).childSnapshotForPath("outfits").children
                     for o in outfits {
                         for article in o.children {
-                            mod.outfits.append(article.value as NSString)
+                            let a = Article(name: article.value as String, specialCondition: true)
+                            mod.outfits.append(a)
                         }
                     }
                 }
@@ -165,7 +171,8 @@ class RiseModel: NSObject {
                 let outfitSnap = snapshot.childSnapshotForPath("weather_module").childSnapshotForPath(mod.weather as String).childSnapshotForPath("outfits")
                 for o in outfitSnap.children {
                     for article in o.children{
-                        mod.outfits.append(article.value as NSString)
+                        let a = Article(name: article.value as String, specialCondition: false)
+                        mod.outfits.append(a)
                     }
                 }
             }
@@ -177,7 +184,7 @@ class RiseModel: NSObject {
 
     
     private func updateCurrent(onCompletion: () -> Void) {
-        currentTemperature = currentHourlyWeather[0]["temp"][measurementType].string
+        currentTemperature = currentHourlyWeather[0]["temp"][measurementType].string!
         currentImageURL = currentHourlyWeather[0]["icon_url"].string!
         currentConditionString = currentHourlyWeather[0]["condition"].string!
         currentCityStr = weatherApiManager.cityName as String
