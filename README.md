@@ -18,12 +18,15 @@ A weather and news app that predicts what you should wear given the current and 
 - [ ] Allow filter of certain social media or topics
 
 #### Rise
+- [x] Add emphasis on important articles of clothing
 - [ ] Add icons for articles of clothing
 - [ ] Move prediction logic serverside
 - [ ] Add feed back alert to ask if suggestion is too hot, cold, or just right
 - [ ] Use ML to adjust thresholds based on feed back
 
 #### Profile
+- [ ] Feed back from updating location
+- [ ] Change location based on input city and state
 - [ ] Get profile icon
 - [ ] Implement push notifications
 - [ ] Allow users to update of password, email, profile pic, name etc.
@@ -36,9 +39,10 @@ A weather and news app that predicts what you should wear given the current and 
 - [ ] Login with facebook
 
 #### Known Issues
+- [x] Nil value on first time opening app
 - [ ] Will show wrong day if end time is 1:00 AM
 - [ ] Sometimes end time is missing
-- [ ] outfits changed to null
+- [x] outfits changed to null
 - [ ] Resizing issues with icons in the feed
 
 
