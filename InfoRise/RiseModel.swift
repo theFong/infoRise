@@ -120,6 +120,7 @@ class RiseModel: NSObject {
         var prevMod =  w[0]
         weatherModules = [WeatherModule]()
         weatherModules.append(prevMod)
+        
         for hourMod in w {
             // adding missed conditions
             if prevMod.weather == hourMod.weather {
@@ -144,6 +145,8 @@ class RiseModel: NSObject {
             }
             
         }
+        w[0].startDay = ""
+        w[0].startTime = "Now"
         addOutfits(onCompletion)
     }
     
