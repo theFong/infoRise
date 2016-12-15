@@ -119,7 +119,7 @@ class RiseModel: NSObject {
     // merging similar modules
     private func setModules(w: [WeatherModule], onCompletion: () -> Void) {
         var prevMod =  w[0]
-        weatherModules = [WeatherModule]()
+        weatherModules.removeAll()
         weatherModules.append(prevMod)
         
         for hourMod in w {

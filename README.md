@@ -10,7 +10,7 @@ A weather and news app that predicts what you should wear given the current and 
 
 ### Features to be implemented
 #### Feed
-- [ ] Prevent repeat articles in news feed
+- [x] Prevent repeat articles in news feed
 - [ ] Integrate trending on Twitter
 - [ ] Integrate trending on Facebook
 - [ ] Integrate reddit r/all
@@ -20,6 +20,7 @@ A weather and news app that predicts what you should wear given the current and 
 #### Rise
 - [x] Add emphasis on important articles of clothing
 - [x] Add icons for articles of clothing
+- [ ] Add sub times for special condition clothing
 - [ ] Move prediction logic serverside
 - [ ] Add feed back alert to ask if suggestion is too hot, cold, or just right
 - [ ] Use ML to adjust thresholds based on feed back
@@ -44,6 +45,7 @@ A weather and news app that predicts what you should wear given the current and 
 - [x] Sometimes end time is missing
 - [x] outfits changed to null
 - [ ] Resizing issues with icons in the feed
+- [ ] Icons not showing up in cells
 
 
 # Screen Shots

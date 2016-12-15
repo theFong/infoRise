@@ -41,6 +41,7 @@ class FeedModel: NSObject {
     }
     
     private func setFeed() {
+        feedObjects.removeAll()
         for a in articlesJson {
             let fo = FeedObject(headLine: a["title"].string != nil ? a["title"].string! : "", link: a["url"].string!, description: a["description"].string != nil ? a["description"].string! : "", iconLink: a["urlToImage"].string != nil ? a["urlToImage"].string! : "")
             feedObjects.append(fo)

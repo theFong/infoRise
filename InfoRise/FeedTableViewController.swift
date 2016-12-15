@@ -32,6 +32,7 @@ class FeedTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("Feed size: \(feedModel.feedObjects.count)")
         return feedModel.feedObjects.count
     }
     
