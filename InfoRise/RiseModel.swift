@@ -53,6 +53,7 @@ class RiseModel: NSObject {
     struct Article {
         var name: String
         var specialCondition: Bool
+        var image: String
     }
     
     override private init() {
@@ -171,7 +172,9 @@ class RiseModel: NSObject {
                    let outfits = snapshot.childSnapshotForPath("condition_module").childSnapshotForPath(cond as String).childSnapshotForPath("outfits").children
                     for o in outfits {
                         for article in o.children {
-                            let a = Article(name: article.value as String, specialCondition: true)
+                            let name = snapshot.childSnapshotForPath("clothing").childSnapshotForPath(article.value).children.nextObject()?.key
+                            let img = snapshot.childSnapshotForPath("clothing").childSnapshotForPath(article.value).children.nextObject()?.childSnapshotForPath("image").value
+                            let a = Article(name: name! as String, specialCondition: true, image: img as! String)
                             mod.outfits.append(a)
                         }
                     }
@@ -180,7 +183,9 @@ class RiseModel: NSObject {
                 let outfitSnap = snapshot.childSnapshotForPath("weather_module").childSnapshotForPath(mod.weather as String).childSnapshotForPath("outfits")
                 for o in outfitSnap.children {
                     for article in o.children{
-                        let a = Article(name: article.value as String, specialCondition: false)
+                        let name = snapshot.childSnapshotForPath("clothing").childSnapshotForPath(article.value).children.nextObject()?.key
+                        let img = snapshot.childSnapshotForPath("clothing").childSnapshotForPath(article.value).children.nextObject()?.childSnapshotForPath("image").value
+                        let a = Article(name: name! as String, specialCondition: false, image: img as! String)
                         mod.outfits.append(a)
                     }
                 }

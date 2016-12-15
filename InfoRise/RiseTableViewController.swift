@@ -46,6 +46,7 @@ class RiseTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             cell.textLabel?.textColor = hexStringToUIColor("FAAF09")
+            cell.textLabel?.font = cell.textLabel!.font.fontWithSize(20)
 
             if(riseModel.currentConditionString == nil || riseModel.currentTemperature == nil){
                 cell.textLabel?.textAlignment = .Center
@@ -81,6 +82,9 @@ class RiseTableViewController: UITableViewController {
                 print("null in table caught")
                 return cell
             }
+            // clothing icon
+            cell.imageView?.image = UIImage(named: riseModel.weatherModules[indexPath.section-1].outfits[indexPath.row].image as String)
+            
             if riseModel.weatherModules[indexPath.section-1].outfits[indexPath.row].specialCondition {
                 cell.textLabel?.textColor = hexStringToUIColor("FAAF09") //yellow
             } else {
@@ -92,13 +96,24 @@ class RiseTableViewController: UITableViewController {
         }
     }
     
+    //custom row height
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) ->
+        CGFloat {
+        switch indexPath.section {
+        case 0:
+            return 75;
+        default:
+            return 50;
+        }
+    }
+    
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
             let cityName = riseModel.currentCityStr.stringByReplacingOccurrencesOfString("_", withString: " ")
             return "Current Conditions, \(cityName)"
         default:
-            return "\(riseModel.weatherModules[section-1].startDay) \(riseModel.weatherModules[section-1].startTime) - \(riseModel.weatherModules[section-1].endDay) \(riseModel.weatherModules[section-1].endTime), I suggest"
+            return "\(riseModel.weatherModules[section-1].startDay) \(riseModel.weatherModules[section-1].startTime) - \(riseModel.weatherModules[section-1].endDay) \(riseModel.weatherModules[section-1].endTime), suggest"
         }
     }
     
@@ -135,17 +150,6 @@ class RiseTableViewController: UITableViewController {
 
 
 }
-
-//print("--weather: \(riseModel.weatherModules[indexPath.section-1].weather)--")
-//print("outCount: \(riseModel.weatherModules[indexPath.section-1].outfits.count)")
-//print("outs: \(riseModel.weatherModules[indexPath.section-1].outfits)")
-//print("all:")
-//for i in riseModel.weatherModules {
-//    print(i.outfits)
-//}
-
-//print("section: \(indexPath.section)")
-//print("row: \(indexPath.row)")
 
 
 
