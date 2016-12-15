@@ -25,7 +25,7 @@ A weather and news app that predicts what you should wear given the current and 
 - [ ] Use ML to adjust thresholds based on feed back
 
 #### Profile
-- [ ] Feed back from updating location
+- [x] Feed back from updating location
 - [ ] Change location based on input city and state
 - [ ] Get profile icon
 - [ ] Implement push notifications
