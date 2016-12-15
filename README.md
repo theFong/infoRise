@@ -19,7 +19,7 @@ A weather and news app that predicts what you should wear given the current and 
 
 #### Rise
 - [x] Add emphasis on important articles of clothing
-- [ ] Add icons for articles of clothing
+- [x] Add icons for articles of clothing
 - [ ] Move prediction logic serverside
 - [ ] Add feed back alert to ask if suggestion is too hot, cold, or just right
 - [ ] Use ML to adjust thresholds based on feed back
