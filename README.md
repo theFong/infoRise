@@ -46,6 +46,7 @@ A weather and news app that predicts what you should wear given the current and 
 - [x] outfits changed to null
 - [ ] Resizing issues with icons in the feed
 - [ ] Icons not showing up in cells
+- [ ] Logs out users unintentionally
 
 
 # Screen Shots
