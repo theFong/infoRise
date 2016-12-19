@@ -40,6 +40,13 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
         ErrorLabel.text = ""
         GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
+        
+        FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
+            if let user = user {
+                // User is signed in.
+                self.performSegueWithIdentifier("main", sender: nil)
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
