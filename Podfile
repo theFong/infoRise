@@ -15,6 +15,7 @@ target 'InfoRise' do
   pod 'Firebase/Database'
   
   pod 'SwiftyJSON', '2.4.0'
+  
 
 
   # Pods for InfoRise

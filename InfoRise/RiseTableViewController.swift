@@ -13,6 +13,10 @@ class RiseTableViewController: UITableViewController {
     
     let riseModel = RiseModel.sharedInstance
     
+    var tooHotButton = RadioButton()
+    var tooColdButton = RadioButton()
+    var justRightButton = RadioButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
@@ -21,6 +25,23 @@ class RiseTableViewController: UITableViewController {
             self.refreshControl!.endRefreshing()
         })
     }
+    
+    override func awakeFromNib() {
+        self.view.layoutIfNeeded()
+        
+        tooHotButton.selected = false
+        tooHotButton.setButtonColor(hexStringToUIColor("FAAF09").CGColor)
+        tooColdButton.selected = false
+        tooColdButton.setButtonColor(hexStringToUIColor("3D586C").CGColor)
+        justRightButton.selected = false
+        justRightButton.setButtonColor(UIColor.greenColor().CGColor)
+        
+        tooHotButton.alternateButton = [tooColdButton,justRightButton]
+        tooColdButton.alternateButton = [tooHotButton,justRightButton]
+        justRightButton.alternateButton = [tooColdButton,tooHotButton]
+        
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -76,6 +97,7 @@ class RiseTableViewController: UITableViewController {
             }
             return cell
         default:
+            cell.textLabel?.font = cell.textLabel!.font.fontWithSize(16)
             cell.imageView!.image = nil
             //hacky fix to weird bug where sometimes the outfits get cleared, appears before load often
             if riseModel.weatherModules[indexPath.section-1].outfits.count == 0 {
@@ -113,7 +135,7 @@ class RiseTableViewController: UITableViewController {
             let cityName = riseModel.currentCityStr.stringByReplacingOccurrencesOfString("_", withString: " ")
             return "Current Conditions, \(cityName)"
         default:
-            return "\(riseModel.weatherModules[section-1].startDay) \(riseModel.weatherModules[section-1].startTime) - \(riseModel.weatherModules[section-1].endDay) \(riseModel.weatherModules[section-1].endTime), suggest"
+            return "\(riseModel.weatherModules[section-1].startDay) \(riseModel.weatherModules[section-1].startTime) - \(riseModel.weatherModules[section-1].endDay != riseModel.weatherModules[section-1].startDay ? riseModel.weatherModules[section-1].endDay : "") \(riseModel.weatherModules[section-1].endTime), suggest"
         }
     }
     
