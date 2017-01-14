@@ -57,7 +57,7 @@ class RiseTableViewController: UITableViewController {
         case 0:
             return 1
         default:
-            return riseModel.weatherModules[section-1].outfits.count
+            return riseModel.groups[section].groupElements.count
         }
     }
     
@@ -105,15 +105,17 @@ class RiseTableViewController: UITableViewController {
                 return cell
             }
             // clothing icon
-            cell.imageView?.image = UIImage(named: riseModel.weatherModules[indexPath.section-1].outfits[indexPath.row].image as String)
+//            cell.imageView?.image = UIImage(named: riseModel.weatherModules[indexPath.section-1].outfits[indexPath.row].image as String)
+            cell.imageView?.image = UIImage(named: riseModel.groups[indexPath.section].groupElements[indexPath.row].image as String)
             
-            if riseModel.weatherModules[indexPath.section-1].outfits[indexPath.row].specialCondition {
+            
+            if riseModel.groups[indexPath.section].groupElements[indexPath.row].specialCondition {
                 cell.textLabel?.textColor = hexStringToUIColor("FAAF09") //yellow
             } else {
                 cell.textLabel?.textColor = hexStringToUIColor("3D586C") //blue
 
             }
-            cell.textLabel?.text = riseModel.weatherModules[indexPath.section-1].outfits[indexPath.row].name
+            cell.textLabel?.text = riseModel.groups[indexPath.section].groupElements[indexPath.row].name
             return cell
         }
     }

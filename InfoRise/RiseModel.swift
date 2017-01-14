@@ -34,6 +34,16 @@ class RiseModel: NSObject {
     
     var currentCityStr = ""
     
+    var groups = [Group]()
+    
+    class Group {
+        var groupName:String
+        var groupElements = [Article]()
+        init(groupName: String) {
+            self.groupName = groupName
+        }
+    }
+    
     class WeatherModule {
         init(startDay: NSString, startTime: NSString, weather: NSString, conditions: [NSString]) {
             self.startDay = startDay
@@ -47,7 +57,7 @@ class RiseModel: NSObject {
         var endTime: NSString = ""
         var weather: NSString = ""
         var conditions = [NSString]()
-        var outfits = [Article]()
+        var outfits = [[Article]]()
     }
     
     struct Article {
@@ -167,33 +177,74 @@ class RiseModel: NSObject {
     private func addOutfits(onCompletion: () -> Void){
         firebaseRef.child("rise_data").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             for mod in self.weatherModules {
+                // look up weather
+                let outfitSnap = snapshot.childSnapshotForPath("weather_module").childSnapshotForPath(mod.weather as String).childSnapshotForPath("outfits")
+                var count = 0
+                for o in outfitSnap.children {
+                    mod.outfits.append([Article]())
+                    for article in o.children{
+                        let name = snapshot.childSnapshotForPath("clothing").childSnapshotForPath(article.value).children.nextObject()?.key
+                        let img = snapshot.childSnapshotForPath("clothing").childSnapshotForPath(article.value).children.nextObject()?.childSnapshotForPath("image").value
+                        let a = Article(name: name! as String, specialCondition: false, image: img as! String)
+                        print(count)
+                        mod.outfits[count].append(a)
+                    }
+                    count += 1
+                }
                 // look up condition
                 for cond in mod.conditions {
-                   let outfits = snapshot.childSnapshotForPath("condition_module").childSnapshotForPath(cond as String).childSnapshotForPath("outfits").children
+                    let outfits = snapshot.childSnapshotForPath("condition_module").childSnapshotForPath(cond as String).childSnapshotForPath("outfits").children
                     for o in outfits {
                         for article in o.children {
                             let name = snapshot.childSnapshotForPath("clothing").childSnapshotForPath(article.value).children.nextObject()?.key
                             let img = snapshot.childSnapshotForPath("clothing").childSnapshotForPath(article.value).children.nextObject()?.childSnapshotForPath("image").value
                             let a = Article(name: name! as String, specialCondition: true, image: img as! String)
-                            mod.outfits.append(a)
+                            
+                            for var i in mod.outfits {
+                                i.insert(a, atIndex: 0)
+                            }
                         }
                     }
                 }
-                // look up weather
-                let outfitSnap = snapshot.childSnapshotForPath("weather_module").childSnapshotForPath(mod.weather as String).childSnapshotForPath("outfits")
-                for o in outfitSnap.children {
-                    for article in o.children{
-                        let name = snapshot.childSnapshotForPath("clothing").childSnapshotForPath(article.value).children.nextObject()?.key
-                        let img = snapshot.childSnapshotForPath("clothing").childSnapshotForPath(article.value).children.nextObject()?.childSnapshotForPath("image").value
-                        let a = Article(name: name! as String, specialCondition: false, image: img as! String)
-                        mod.outfits.append(a)
-                    }
-                }
             }
+            self.constructModel()
             objc_sync_exit(self.weatherModules)
             onCompletion()
         })
         
+    }
+    
+    private func constructModel(){
+        var newGroup = [Group]()
+        
+        //current conds
+        let cityName = currentCityStr.stringByReplacingOccurrencesOfString("_", withString: " ")
+        var currentInfo = Group(groupName: "Current Conditions, \(cityName)")
+        let currA = Article(name: "\(currentConditionString), \(currentTemperature)°\(measurementType == "english" ? "F" : "C")", specialCondition: false, image: currentImageURL)
+        currentInfo.groupElements.append(currA)
+        newGroup.append(currentInfo)
+        
+        for wm in weatherModules {
+            //first outfit
+            let groupName = "\(wm.startDay) \(wm.startTime) - \(wm.endDay != wm.startDay ? wm.endDay : "") \(wm.endTime), suggest"
+            let g = Group(groupName: groupName)
+            for a in wm.outfits[0] {
+                g.groupElements.append(a)
+            }
+            newGroup.append(g)
+            if wm.outfits.count > 1 {
+                for i in 1..<wm.outfits.count {
+                    var g2 = Group(groupName: "or")
+                    for a in wm.outfits[i] {
+                        g2.groupElements.append(a)
+                    }
+                    newGroup.append(g2)
+                }
+                
+                
+            }
+        }
+        groups = newGroup
     }
 
     
