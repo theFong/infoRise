@@ -1,4 +1,4 @@
-ls# InfoRise
+# InfoRise
 Never caught cold.
 
 Alec Fong
